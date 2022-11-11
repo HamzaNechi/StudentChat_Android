@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/post_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_margin="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_user"
+            android:layout_width="75dp"
+            android:layout_height="69dp"
+            app:srcCompat="@drawable/u3" />
+
+        <TextView
+            android:id="@+id/name_user"
+            android:layout_width="222dp"
+            android:layout_height="38dp"
+            android:text="Hamza nechi"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="98dp"
+            android:layout_height="41dp"
+            android:text="11/11/2022" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/post_information"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/content_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="hello in new post testing"
+            android:textSize="16dp"/>
+
+        <ImageView
+            android:id="@+id/img_post"
+            android:layout_marginTop="5dp"
+            android:layout_width="380dp"
+            android:layout_height="200dp"
+            android:src="@drawable/u3"/>
+    </LinearLayout>
+
+</RelativeLayout>

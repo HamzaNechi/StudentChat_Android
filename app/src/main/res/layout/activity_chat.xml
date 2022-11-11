@@ -50,12 +50,8 @@
 
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/background_menu"
-        app:menu="@menu/menu_bottom"
-        android:layout_alignParentBottom="true"
+    <include
+        layout="@layout/activity_root"
         android:id="@+id/menu_bottom"/>
 
 
