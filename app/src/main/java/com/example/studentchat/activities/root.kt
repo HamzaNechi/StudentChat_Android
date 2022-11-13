@@ -10,6 +10,6 @@ class root : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_root)
 
-        val b=findViewById<BottomNavigationView>(R.id.menu_bottom);
+        //val b=findViewById<BottomNavigationView>(R.id.menu_bottom);
     }
 }

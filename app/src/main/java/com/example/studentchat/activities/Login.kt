@@ -16,7 +16,7 @@ class Login : AppCompatActivity() {
 
         val tabLayout=findViewById<TabLayout>(R.id.tabs)
 
-        val container=findViewById<FragmentContainerView>(R.id.fragment_container)
+
 
         tabLayout.addOnTabSelectedListener(object:TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -24,7 +24,7 @@ class Login : AppCompatActivity() {
                     replaceFragment(InscriptionFragment())
                 }
 
-                if(tab!!.position == 0){
+                if(tab.position == 0){
                     replaceFragment(LoginFragment())
                 }
             }

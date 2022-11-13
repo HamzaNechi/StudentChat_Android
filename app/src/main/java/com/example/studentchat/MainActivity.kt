@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import com.example.studentchat.activities.Chat
 import com.example.studentchat.activities.Login
@@ -14,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        handler=Handler();
+        handler=Handler(Looper.getMainLooper());
         handler.postDelayed({
             val intent=Intent(this,Login::class.java)
             startActivity(intent)

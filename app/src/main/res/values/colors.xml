@@ -4,6 +4,11 @@
     <color name="secondary">#96979b</color>
     <color name="secondaryVariant">#babbbd</color>
     <color name="clair">#dfe0e2</color>
-    <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <color name="black">#000000</color>
+    <color name="light_grey">#e4e4e4</color>
+    <color name="grey">#8b8b8b</color>
+    <color name="dark_grey">#696969</color>
 </resources>
