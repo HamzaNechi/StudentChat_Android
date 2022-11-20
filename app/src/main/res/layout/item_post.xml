@@ -14,7 +14,9 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp">
-        <ImageView
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            app:roundPercent = "1.0"
             android:id="@+id/img_user"
             android:layout_width="45dp"
             android:layout_height="45dp"

@@ -8,10 +8,11 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentchat.R
+import com.example.studentchat.entity.Chat
 import com.example.studentchat.entity.User
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ChatListAdapter(val listChat:ArrayList<User>):RecyclerView.Adapter<ChatListAdapter.ViewHolder>() {
+class ChatListAdapter(val listChat:ArrayList<Chat>):RecyclerView.Adapter<ChatListAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,7 +21,7 @@ class ChatListAdapter(val listChat:ArrayList<User>):RecyclerView.Adapter<ChatLis
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data:User=listChat[position]
+        val data:Chat=listChat[position]
         holder.nom.text=data.nom
         holder.msg.text=data.msg;
         holder.time.text=data.time;

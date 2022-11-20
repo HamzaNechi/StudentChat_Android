@@ -2,13 +2,25 @@ package com.example.studentchat.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.studentchat.Interface.ApiPostInterface
+import com.example.studentchat.Interface.ListPost
 import com.example.studentchat.R
 import com.example.studentchat.adapters.PostAdapter
 import com.example.studentchat.entity.Post
 import com.example.studentchat.entity.User
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Home : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,19 +29,33 @@ class Home : AppCompatActivity() {
 
         val posts=findViewById<RecyclerView>(R.id.recycler_post);
         posts.layoutManager= LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+        //Retrofit
+        val retrofitBuilder=Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("http://192.168.1.15:9090/")
+            .build()
+            .create(ApiPostInterface::class.java)
 
-        val u1: User = User(nom = "Hamza nechi", time = "06:12", msg = "Le Chat domestique (Felis silvestris catus) est la sous-espèce issue de la domestication", img = R.drawable.u3);
-        val u2: User = User(nom = "Dhif ghassen", time = "06:12", msg = "Le Chat domestique (Felis silvestris catus) est la sous-espèce issue de la domestication", img = R.drawable.u2);
+        val retrofitData=retrofitBuilder.getAllPost()
+        Log.e("retrofitData",retrofitData.toString());
+        retrofitData.enqueue(object :Callback<ListPost>{
+            override fun onResponse(call: Call<ListPost>, response: Response<ListPost>) {
+                val lp:ListPost= response.body()!!
+                val listPosts:ArrayList<Post> = lp.posts.toCollection(kotlin.collections.ArrayList())
+                posts.adapter=PostAdapter(listPosts)
+            }
 
-        val p1:Post=Post(image = R.drawable.bg_top_log, description = "Wikipédia est un projet d’encyclopédie collective en ligne, universelle, multilingue et fonctionnant sur le principe du wiki. Ce projet vise à offrir un contenu librement réutilisable, objectif et vérifiable, que chacun peut modifier et améliorer.", date = "11/09/2022", u = u1);
-        val p2:Post=Post(image = R.drawable.u2, description = "\uD83D\uDCCA Show your network speed right in the toolbar Download here: https://rebrand.ly/computernetworkspeed", date = "11/09/2022", u = u2);
-        val p3:Post=Post(image = 0,description = "\\uD83D\\uDCCA Show your network speed right in the toolbar Download here: https://rebrand.ly/computernetworkspeed", date = "11/09/2022", u = u1);
+            override fun onFailure(call: Call<ListPost>, t: Throwable) {
+                Log.e("onFailure",t.toString())
+            }
+        })
+        //End Retrofit
 
-        val listPost=ArrayList<Post>();
-        listPost.add(p1)
-        listPost.add(p2)
-        listPost.add(p3)
 
-        posts.adapter=PostAdapter(listPost);
+
+
+
     }
+
+
 }
