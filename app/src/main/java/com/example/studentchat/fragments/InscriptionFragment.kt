@@ -16,7 +16,6 @@ class InscriptionFragment : Fragment() {
     ): View? {
         val view:View=inflater.inflate(R.layout.fragment_inscription, container, false)
 
-
         return view
     }
 }

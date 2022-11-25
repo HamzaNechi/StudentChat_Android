@@ -23,18 +23,41 @@
 
 
 
-    <include
-        layout="@layout/activity_root"
-        android:id="@+id/menu_bottom"/>
+    <com.google.android.material.bottomnavigation.BottomNavigationView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_menu"
+        app:menu="@menu/menu_bottom"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/menu_bottom"
+        tools:context=".activities.root"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:backgroundTint="#1958D6"
-        android:id="@+id/recycler_post"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="607dp"
         android:layout_above="@+id/menu_bottom"
         android:layout_below="@+id/appbar"
         android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp" />
+        android:layout_marginBottom="1dp"
+        android:name="com.example.studentchat.fragments.DisplayPost"
+        tools:layout="@layout/fragment_display_post" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_above="@+id/menu_bottom"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|right"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:contentDescription="fab"
+        app:backgroundTint="@color/primary"
+        app:srcCompat="@drawable/ic_baseline_post_add_24"
+        app:tint="@color/white" />
 
 </RelativeLayout>
