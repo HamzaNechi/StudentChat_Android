@@ -14,15 +14,15 @@ interface ApiPostInterface {
     fun getAllPost(): Call<ListPost>
 
 
-    /**@Multipart
+    @Multipart
     @POST("post")
     fun addPost(@Part image: MultipartBody.Part,
                 @Part("description") description:RequestBody,
-                @Part("user") user:RequestBody): Call<ServerResponse>*/
+                @Part("user") user:RequestBody): Call<ServerResponse>
 
 
-    @Multipart
+   @Multipart
     @POST("post")
-    fun addPost(@Part("description") description:RequestBody,
+    fun addPostSansImage(@Part("description") description:RequestBody,
                 @Part("user") user:RequestBody): Call<ServerResponse>
 }

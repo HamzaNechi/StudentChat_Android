@@ -1,11 +1,14 @@
 package com.example.studentchat.activities
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.SearchView
 import android.widget.Toast
@@ -16,20 +19,36 @@ import com.example.studentchat.fragments.DisplayPost
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.jar.Manifest
 
 class Home : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         val toolbar=findViewById<androidx.appcompat.widget.Toolbar>(R.id.myToolbar)
         setSupportActionBar(toolbar);
-
         val btnAddPost=findViewById<FloatingActionButton>(R.id.floating_action_button);
+        toolbar.title="Accueil"
+        btnAddPost.visibility=View.VISIBLE
+    /**Permission read storage**/
+        val permissionsStorage = arrayOf<String>(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        val requestExternalStorage = 1
+        val permission =
+            ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, permissionsStorage, requestExternalStorage)
+        }
+        /***End permission read storage**/
+
+
 
         btnAddPost.setOnClickListener {
             toolbar.title="Nouvelle publication";
-            supportActionBar!!.setDisplayHomeAsUpEnabled(/* showHomeAsUp = */ true)
+            toolbar.menu.close()
+            btnAddPost.visibility=View.GONE
             replaceFragment(AddPost(this));
         }
 
@@ -60,11 +79,13 @@ class Home : AppCompatActivity() {
 
     }
 
+
+
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction=fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container,fragment)
-        fragmentTransaction.commit()
+        fragmentTransaction.addToBackStack(null).commit()
     }
 
 

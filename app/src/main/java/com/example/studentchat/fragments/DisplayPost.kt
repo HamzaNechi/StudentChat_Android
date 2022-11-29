@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentchat.Interface.ApiPostInterface
@@ -47,9 +48,11 @@ class DisplayPost: Fragment(){
         retrofitData.enqueue(object : Callback<ListPost> {
             override fun onResponse(call: Call<ListPost>, response: Response<ListPost>) {
                 if (response.isSuccessful){
+                   // Toast.makeText(context,response.code().toString(),Toast.LENGTH_LONG).show()
                     val lp: ListPost = response.body()!!
                     val listPosts:ArrayList<Post> = lp.posts.toCollection(kotlin.collections.ArrayList())
                     posts.adapter= PostAdapter(listPosts)
+
                 }
 
             }

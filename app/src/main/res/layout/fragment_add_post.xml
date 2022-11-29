@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,39 +8,110 @@
 
 
 
-
-
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <ImageView
-            android:id="@+id/preview"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background" />
-
-        <Button
-            android:id="@+id/pickImage"
-            android:layout_below="@id/preview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Pick Image" />
+            android:layout_height="match_parent">
 
 
-        <Button
-            android:id="@+id/upload"
-            android:layout_below="@id/pickImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="upload" />
 
-    </RelativeLayout>
+
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/discussion_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Écrire votre article ici ...">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/desc_addpost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <ImageView
+                android:id="@+id/img_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/discussion_post"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_blitzcrank"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_addpost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ajouter une image"
+                android:layout_below="@+id/img_post"
+                android:gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:textSize="15sp"
+                android:textColor="@color/dark_grey"/>
+
+            <RelativeLayout
+                android:id="@+id/ll_addpost"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/txt_addpost"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/pick_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gallery"
+                    android:drawableLeft="@drawable/ic_baseline_image_24"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+
+
+
+
+
+                <Button
+                    android:id="@+id/pick_camera"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Caméra"
+                    android:drawableLeft="@drawable/ic_baseline_camera_alt_24"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/addpost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_addpost"
+                android:text="Ajouter votre article"
+                android:layout_margin="20dp"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+
+
 
 </FrameLayout>
