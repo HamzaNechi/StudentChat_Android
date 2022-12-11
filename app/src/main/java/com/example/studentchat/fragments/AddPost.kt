@@ -104,7 +104,7 @@ class AddPost(val ctx: Context): Fragment() {
             /** add post sans image***/
             path="empty"
             //add post local
-            val u=User(id= currentUser_id, username = "Hamza nechi", password = "1234", role = "admin","nechi@ggg.com","http://172.16.9.183:9090/images/user/moi1669497229681.jpg")
+            val u=User(id= currentUser_id, username = "Hamza nechi", password = "1234", role = "admin","nechi@ggg.com","http://172.16.9.183:9090/images/user/moi1669497229681.jpg", status = "hors ligne")
             val entity_post=Post(id="eee", image = path, description = description, date = Date(),u=u, author = u.id);
             //add to database
             val description:RequestBody=RequestBody.create("multipart/form-data".toMediaTypeOrNull(), entity_post.description)
@@ -114,7 +114,7 @@ class AddPost(val ctx: Context): Fragment() {
         }else{
             /**add post avec image**/
             //add post local
-            val u=User(id=currentUser_id, username = "Hamza nechi", password = "1234", role = "admin","nechi@ggg.com","http://172.16.9.183:9090/images/user/moi1669497229681.jpg")
+            val u=User(id=currentUser_id, username = "Hamza nechi", password = "1234", role = "admin","nechi@ggg.com","http://172.16.9.183:9090/images/user/moi1669497229681.jpg", status = "hors ligne")
             val entity_post=Post(id="eee", image = path, description = description, date = Date(),u=u, author = u.id)
             //save post to database
             f=File(path);

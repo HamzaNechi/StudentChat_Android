@@ -1,6 +1,7 @@
 package com.example.studentchat.Interface
 
 import com.example.studentchat.entity.Comment
+import com.example.studentchat.entity.Invitations
 import com.example.studentchat.entity.Like
 import com.example.studentchat.entity.User
 import okhttp3.MultipartBody
@@ -71,6 +72,29 @@ interface ApiPostInterface {
     @GET(/* value = */ "comment/delete/{id_comment}")
     fun deleteComment(@Path("id_comment") id_comment:String?): Call<ServerResponse>
     /************************** end consommation commentaire **********************************/
+
+
+
+    /************************ Consommation invitation ***********************************/
+    @GET("invitations/{currentUser}")
+    fun getInvitationEnAttente(@Path("currentUser") currentUser:String):Call<ArrayList<Invitations>>
+
+    @POST("invitations/accept")
+    fun acceptInvitation(@Body body: HashMap<String, String>):Call<ServerResponse>
+
+    @POST("invitations/refuse")
+    fun refuseInvitation(@Body body: HashMap<String, String>):Call<ServerResponse>
+    /*************************end consommation invitation******************************/
+
+
+
+    /******************** Consommation amis ***********************************/
+    @GET("amis/{currentUser}")
+    fun getAllAmis(@Path("currentUser") currentUser:String):Call<ArrayList<User>>
+
+    @POST("amis/delete")
+    fun deleteAmis(@Body body: HashMap<String, String>):Call<ServerResponse>
+    /******************* end Consomation amis *********************************/
 
 
     companion object Connection {

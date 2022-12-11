@@ -10,4 +10,5 @@ data class User(
     @SerializedName("role") @Expose var role:String,
     @SerializedName("email") @Expose var email:String,
     @SerializedName("image") @Expose var image:String,
+    @SerializedName("status") @Expose var status:String,
 )
