@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:text="Modifier article"
+                />
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/discussion_post"
+                android:layout_below="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Écrire votre article ici ...">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/content_update_post"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <ImageView
+                android:id="@+id/img_post_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/discussion_post"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_blitzcrank"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_addpost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ajouter une image"
+                android:layout_below="@+id/img_post_update"
+                android:gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:textSize="15sp"
+                android:textColor="@color/dark_grey"/>
+
+            <RelativeLayout
+                android:id="@+id/ll_addpost"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/txt_addpost"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/pick_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gallery"
+                    android:drawableLeft="@drawable/ic_baseline_image_24"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+
+
+
+
+
+                <Button
+                    android:id="@+id/pick_camera"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Caméra"
+                    android:drawableLeft="@drawable/ic_baseline_camera_alt_24"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_addpost"
+                android:layout_margin="20dp">
+
+                <Button
+                    android:id="@+id/dismiss_update"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_grey"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/updatepost"
+                    android:text="Annuler"
+                    style="?attr/materialButtonOutlinedStyle"/>
+
+                <Button
+                    android:id="@+id/updatepost"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content"
+                    android:text="Modifier votre article" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

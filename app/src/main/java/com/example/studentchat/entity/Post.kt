@@ -9,7 +9,8 @@ data class Post(
     @SerializedName("image") @Expose val image:String,
     @SerializedName("description") @Expose val description:String,
     @SerializedName("date") @Expose val date:Date,
-    @SerializedName("user") @Expose val u:User
+    @SerializedName("user") @Expose val u:User,
+    @SerializedName("author") @Expose val author:String
     )
 
 

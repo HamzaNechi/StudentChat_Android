@@ -17,9 +17,9 @@
 
 
     <item
-        android:id="@+id/groups"
+        android:id="@+id/contacts"
         android:icon="@drawable/ic_baseline_groups_24"
-        android:title="Groupes"/>
+        android:title="Contacts"/>
 
     <item
         android:id="@+id/profile"

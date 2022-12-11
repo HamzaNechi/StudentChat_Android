@@ -71,6 +71,12 @@ class Home : AppCompatActivity() {
                     startActivity(i)
                     true
                 }
+                R.id.contacts->{
+                    item.isChecked = true
+                    val i= Intent(this,Contact::class.java)
+                    startActivity(i)
+                    true
+                }
                 else -> false
             }
         }//end bottom navigation bar

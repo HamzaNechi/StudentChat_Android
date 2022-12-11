@@ -2,25 +2,20 @@ package com.example.studentchat.fragments
 
 
 
-import android.app.Activity
+
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import com.example.studentchat.Interface.ApiPostInterface
 import com.example.studentchat.Interface.RealPathUtil
@@ -36,11 +31,8 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.*
-import java.util.jar.Manifest
 
 
 class AddPost(val ctx: Context): Fragment() {
@@ -50,6 +42,7 @@ class AddPost(val ctx: Context): Fragment() {
     private lateinit var pickCamera: Button
     private lateinit var addpost: Button
     private var path:String=""
+    lateinit var currentUser_id:String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,6 +54,8 @@ class AddPost(val ctx: Context): Fragment() {
         pickGallery = view.findViewById(R.id.pick_gallery) as Button
         pickCamera = view.findViewById(R.id.pick_camera) as Button
         addpost = view.findViewById(R.id.addpost) as Button
+        val sharedPref= this.activity?.getSharedPreferences("userConnected",Context.MODE_PRIVATE)
+        currentUser_id = sharedPref?.getString("_id","default value").toString()
 
 
         pickGallery.setOnClickListener {
@@ -102,38 +97,33 @@ class AddPost(val ctx: Context): Fragment() {
 
 
             //Retrofit
-            val retrofitBuilder= Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://192.168.1.11:9090/")
-            .build()
-            .create(ApiPostInterface::class.java)
-
-
-
+            val retrofitBuilder=ApiPostInterface.retrofitBuilder
             val f:File
             val call:Call<ServerResponse>
             if(path.isNullOrEmpty()){
             /** add post sans image***/
             path="empty"
             //add post local
-            val u=User(id="6382818daab9fab49033f9b0", username = "Hamza nechi", password = "1234", role = "admin","nechi@ggg.com","http://172.16.11.19:9090/images/user/moi1669497229681.jpg")
-            val entity_post=Post(id="eee",path,description,Date(),u)
+            val u=User(id= currentUser_id, username = "Hamza nechi", password = "1234", role = "admin","nechi@ggg.com","http://172.16.9.183:9090/images/user/moi1669497229681.jpg")
+            val entity_post=Post(id="eee", image = path, description = description, date = Date(),u=u, author = u.id);
             //add to database
             val description:RequestBody=RequestBody.create("multipart/form-data".toMediaTypeOrNull(), entity_post.description)
             val user:RequestBody=RequestBody.create("multipart/form-data".toMediaTypeOrNull(), entity_post.u.id)
-            call=retrofitBuilder.addPostSansImage(description,user);
+            val author:RequestBody=RequestBody.create("multipart/form-data".toMediaTypeOrNull(), entity_post.author)
+            call=retrofitBuilder.addPostSansImage(description,user,author);
         }else{
             /**add post avec image**/
             //add post local
-            val u=User(id="6382818daab9fab49033f9b0", username = "Hamza nechi", password = "1234", role = "admin","nechi@ggg.com","http://172.16.11.19:9090/images/user/moi1669497229681.jpg")
-            val entity_post=Post(id="eee",path,description,Date(),u)
+            val u=User(id=currentUser_id, username = "Hamza nechi", password = "1234", role = "admin","nechi@ggg.com","http://172.16.9.183:9090/images/user/moi1669497229681.jpg")
+            val entity_post=Post(id="eee", image = path, description = description, date = Date(),u=u, author = u.id)
             //save post to database
             f=File(path);
             val reqFile:RequestBody=RequestBody.create("multipart/form-data".toMediaTypeOrNull(), f)
             val body: MultipartBody.Part=MultipartBody.Part.createFormData("image",f.name,reqFile)
             val description:RequestBody=RequestBody.create("multipart/form-data".toMediaTypeOrNull(), entity_post.description)
             val user:RequestBody=RequestBody.create("multipart/form-data".toMediaTypeOrNull(), entity_post.u.id)
-            call=retrofitBuilder.addPost(body,description,user);
+            val author:RequestBody=RequestBody.create("multipart/form-data".toMediaTypeOrNull(), entity_post.author)
+            call=retrofitBuilder.addPost(body,description,user,author);
         }
 
         call.enqueue(object :Callback<ServerResponse>{

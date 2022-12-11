@@ -34,6 +34,7 @@
         android:layout_height="23dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="7dp"
+        android:maxLines="1"
         android:text="lorem lorem ageh hamza nbeh "
         app:layout_constraintStart_toEndOf="@+id/img_user"
         app:layout_constraintTop_toBottomOf="@+id/name_user" />

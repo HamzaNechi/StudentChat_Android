@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            app:roundPercent = "1.0"
+            android:id="@+id/img_user_comment"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_ahri"/>
+
+        <LinearLayout
+            android:id="@+id/ll_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/img_user_comment">
+
+            <TextView
+                android:id="@+id/name_user_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hamza nechi"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_below="@+id/rell1"
+                android:background="@drawable/bg_txt_comment"
+                android:layout_height="wrap_content">
+
+
+                <kr.co.prnd.readmore.ReadMoreTextView
+                    android:id="@+id/content_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:autoLink="web|email"
+                    android:text="This is comment"
+                    android:textColor="@color/black"
+                    android:textColorLink="#1956CF"
+                    android:textSize="16sp"
+                    app:readMoreColor="@color/grey"
+                    app:readMoreMaxLine="2"
+                    app:readMoreText="... lire la suite"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </RelativeLayout>
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

@@ -43,7 +43,14 @@ class Chat : AppCompatActivity() {
                     true
                 }
                 R.id.chat -> {
+                    item.setChecked(true)
                     val i= Intent(this,Chat::class.java)
+                    startActivity(i)
+                    true
+                }
+                R.id.contacts->{
+                    item.isChecked = true
+                    val i= Intent(this,Contact::class.java)
                     startActivity(i)
                     true
                 }
