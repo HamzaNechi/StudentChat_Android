@@ -21,6 +21,27 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.UpdatePost"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.AddGroup"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.Chat"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.Contact"
             android:exported="false">
             <meta-data
@@ -49,7 +70,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.Chat"
+            android:name=".activities.Messages"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

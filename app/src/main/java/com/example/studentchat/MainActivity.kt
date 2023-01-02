@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Button
-import com.example.studentchat.activities.Chat
 import com.example.studentchat.activities.Login
 
 class MainActivity : AppCompatActivity() {

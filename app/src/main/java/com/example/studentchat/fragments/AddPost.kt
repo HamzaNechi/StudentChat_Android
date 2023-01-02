@@ -6,7 +6,8 @@ package com.example.studentchat.fragments
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -31,6 +32,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
 
@@ -66,7 +68,7 @@ class AddPost(val ctx: Context): Fragment() {
 
         pickCamera.setOnClickListener {
             val iC=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(iC,1);
+            startActivityForResult(iC,2);
         }
 
         addpost.setOnClickListener {
@@ -89,13 +91,32 @@ class AddPost(val ctx: Context): Fragment() {
                     path=p;
                 }
                 Log.e("Real paath image : ",path)
+            }else{
+                if(requestCode == 2){
+                    val bitmap=data?.extras?.get("data") as Bitmap
+                    imageView.visibility=View.VISIBLE
+                    imageView.setImageBitmap(bitmap)
+                    //bitmap to ur
+                    val bytes = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+                    var url: String? = MediaStore.Images.Media.insertImage(
+                        ctx.getContentResolver(),
+                        bitmap,
+                        currentUser_id,
+                        null
+                    )
+
+                    val rl=RealPathUtil()
+                    val p: String? = rl.getRealPath(ctx, Uri.parse(url))
+                    if(!p.isNullOrEmpty()){
+                        path=p;
+                    }
+                }
             }
         }
     }
 
     private fun addpost(description:String) {
-
-
             //Retrofit
             val retrofitBuilder=ApiPostInterface.retrofitBuilder
             val f:File

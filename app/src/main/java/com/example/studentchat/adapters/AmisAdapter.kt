@@ -1,6 +1,7 @@
 package com.example.studentchat.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,14 @@ import androidx.constraintlayout.utils.widget.ImageFilterView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.studentchat.Interface.ApiPostInterface
+import com.example.studentchat.Interface.ListPost
 import com.example.studentchat.Interface.ServerResponse
 import com.example.studentchat.R
+import com.example.studentchat.activities.Chat
+import com.example.studentchat.entity.Post
 import com.example.studentchat.entity.User
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +51,34 @@ class AmisAdapter(val listAmis:ArrayList<User>, val ctx: Context): RecyclerView.
             holder.status.visibility=View.VISIBLE
         }else{
             holder.status.visibility=View.GONE
+        }
+
+        holder.itemView.setOnClickListener {
+            val map=HashMap<String,String>();
+            map.put("currentUser",currentUser_id)
+            map.put("chatUser",data.id)
+            val retrofitBuilder=ApiPostInterface.retrofitBuilder
+            val retrofitData=retrofitBuilder.getOrCreateRoomPrive(map)
+            retrofitData.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    if (response.isSuccessful){
+                        val chat_id= response.body()!!
+                        val i=Intent(ctx, Chat::class.java)
+                        i.putExtra("chatUser_name",data.username);
+                        i.putExtra("chatUser_image",data.image);
+                        i.putExtra("chat_id",chat_id);
+                        ctx.startActivity(i)
+                    }else{
+                        Log.e("faile get chat_id",response.body().toString())
+                    }
+
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("onFailure_chat_id",t.toString())
+                }
+            })
+
         }
 
 

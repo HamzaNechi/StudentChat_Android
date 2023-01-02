@@ -21,6 +21,7 @@ import com.example.studentchat.Interface.ApiPostInterface
 import com.example.studentchat.Interface.ServerResponse
 import com.example.studentchat.R
 import com.example.studentchat.activities.Home
+import com.example.studentchat.activities.UpdatePost
 import com.example.studentchat.entity.Comment
 import com.example.studentchat.entity.Like
 import com.example.studentchat.entity.Post
@@ -349,44 +350,18 @@ class PostAdapter(val listPost:ArrayList<Post>,val ctx: Context):RecyclerView.Ad
                     }
                 })
             } else if (item.itemId == R.id.edit) {
-                showDialogForUpdatePost(v,post)
+                val i=Intent(ctx,UpdatePost::class.java)
+                i.putExtra("_id",post.id)
+                i.putExtra("image",post.image)
+                i.putExtra("author",post.author)
+                i.putExtra("date",post.date)
+                i.putExtra("user_id",currentUser_id)
+                i.putExtra("content",post.description)
+                ctx.startActivity(i);
             }
             true
         }
         popup.show()
-    }
-
-    private fun showDialogForUpdatePost(v: View, post: Post) {
-        val mDialog:Dialog=Dialog(v.context,android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen)
-        mDialog.setContentView(R.layout.update_post)
-        mDialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        val content=mDialog.findViewById<TextView>(R.id.content_update_post)
-        val img=mDialog.findViewById<ImageView>(R.id.img_post_update)
-        val pickGallery=mDialog.findViewById<Button>(R.id.pick_gallery)
-        val pickCamer=mDialog.findViewById<Button>(R.id.pick_camera)
-        val update=mDialog.findViewById<Button>(R.id.updatepost)
-
-        val btnDismiss=mDialog.findViewById<Button>(R.id.dismiss_update)
-        if(!post.image.isNullOrEmpty() && post.image != "empty"){
-            Glide.with(v)
-                .load(post.image)
-                .into(img)
-            content.text=post.description
-            img.visibility=View.VISIBLE
-        }else{
-            content.text=post.description
-        }
-        mDialog.setTitle("Modifier article")
-        mDialog.show()
-        btnDismiss.setOnClickListener {
-            mDialog.dismiss()
-        }
-
-        pickGallery.setOnClickListener {
-            val iG=Intent(Intent.ACTION_PICK)
-            iG.data= MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-           // startActivityForResult(Home(),iG,1);
-        }
     }
 
     /***************************** end show menu action post ******************/

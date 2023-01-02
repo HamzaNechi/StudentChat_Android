@@ -1,7 +1,7 @@
 package com.example.studentchat.activities
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,19 +9,21 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.studentchat.R
 import com.example.studentchat.fragments.AddPost
-import com.example.studentchat.fragments.DisplayPost
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat
+import androidx.core.graphics.toColor
+import com.example.studentchat.Interface.ApiPostInterface
+import com.example.studentchat.Interface.ServerResponse
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.util.jar.Manifest
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Home : AppCompatActivity() {
 
@@ -67,7 +69,7 @@ class Home : AppCompatActivity() {
                 }
                 R.id.chat -> {
                     item.setChecked(true)
-                    val i= Intent(this,Chat::class.java)
+                    val i= Intent(this,Messages::class.java)
                     startActivity(i)
                     true
                 }
@@ -98,17 +100,42 @@ class Home : AppCompatActivity() {
     @SuppressLint("ResourceAsColor")
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu,menu);
-        val search: SearchView = menu?.findItem(R.id.search)?.actionView as SearchView;
-        search.queryHint="Chercher un article..."
+       // menu?.getItem(R.id.signout)?.icon?.colorFilter = this.getColor(R.color.primary).
+       // val search: SearchView = menu?.findItem(R.id.signout)?.actionView as SearchView;
+       //search.queryHint="Chercher un article..."
         return true
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.search-> Toast.makeText(this,"dd", Toast.LENGTH_LONG).show();
+            R.id.signout-> signout();
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun signout() {
+        val sharedPref= this.getSharedPreferences("userConnected", Context.MODE_PRIVATE)
+        val currentUser_id = sharedPref?.getString("_id","default value").toString()
+        val i= Intent(this,Login::class.java)
+        //Logout with retrofit
+        val map=HashMap<String,String>();
+        map.put("id",currentUser_id);
+        val retrofitBuilder= ApiPostInterface.retrofitBuilder
+        val retrofitData=retrofitBuilder.Logout(map);
+        retrofitData.enqueue(object : Callback<ServerResponse> {
+            override fun onResponse(call: Call<ServerResponse>, response: Response<ServerResponse>) {
+                if (response.isSuccessful){
+                    Log.i("UserLogout","Access Logout");
+                    startActivity(i)
+                }
+
+            }
+
+            override fun onFailure(call: Call<ServerResponse>, t: Throwable) {
+                Log.e("onFailure",t.toString())
+            }
+        })
     }
 
 

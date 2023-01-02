@@ -1,9 +1,6 @@
 package com.example.studentchat.Interface
 
-import com.example.studentchat.entity.Comment
-import com.example.studentchat.entity.Invitations
-import com.example.studentchat.entity.Like
-import com.example.studentchat.entity.User
+import com.example.studentchat.entity.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -18,12 +15,20 @@ interface ApiPostInterface {
     @POST("user/signin")
     fun login(@Body body:HashMap<String, String>): Call<User>
 
+
+    @POST(/* value = */ "user/fetch")
+    fun FetchUser(@Body body:HashMap<String, String>): Call<ArrayList<User>>
+
+
+    @PATCH(/* value = */ "user/logout")
+    fun Logout(@Body body:HashMap<String, String>): Call<ServerResponse>
+
     //Retrofit function post
 
     @GET(/* value = */ "post")
     fun getAllPost(): Call<ListPost>
 
-
+    /*********************** post ****************************/
     @Multipart
     @POST("post")
     fun addPost(@Part image: MultipartBody.Part,
@@ -39,8 +44,36 @@ interface ApiPostInterface {
                 @Part("author") author:RequestBody): Call<ServerResponse>
 
 
+
+
+
     @GET(/* value = */ "post/delete/{id_post}")
     fun deletePost(@Path("id_post") id_post:String?): Call<ServerResponse>
+
+    //update post avec et sans image
+    @Multipart
+    @POST("post/update")
+    fun updatePost(@Part image: MultipartBody.Part,
+                   @Part("description") description:RequestBody,
+                   @Part("id") id_post:RequestBody): Call<ServerResponse>
+
+
+
+    @POST("post/update")
+    fun updatePostSansImage(@Body map:HashMap<String,String>): Call<ServerResponse>
+    //end update post
+
+
+
+
+    //cherhcer post
+    @POST("post/fetch")
+    fun serchPost(@Body map:HashMap<String,String>): Call<ListPost>
+    /************************** end post ********************************/
+
+
+
+
     /****************************Partage post***************************************/
     @POST("post/share")
     fun sharePost(@Body body:HashMap<String, String>): Call<ServerResponse>
@@ -95,6 +128,42 @@ interface ApiPostInterface {
     @POST("amis/delete")
     fun deleteAmis(@Body body: HashMap<String, String>):Call<ServerResponse>
     /******************* end Consomation amis *********************************/
+
+
+
+    /********************* consommation chat room***************************/
+    @POST("/chat")
+    fun getOrCreateRoomPrive(@Body body:HashMap<String,String>):Call<String>
+
+
+    //add room chat groupe
+    @Multipart
+    @POST("chat/add_room")
+    fun addRoomChat(@Part image: MultipartBody.Part,
+                @Part("nom") nom:RequestBody,
+                @Part("admin") admin:RequestBody,
+                @Part("arrUser") arrUser:ArrayList<RequestBody>): Call<Chat>
+
+
+    @POST("chat/groupe")
+    fun getAllGroupe(@Body map: HashMap<String, String>):Call<ArrayList<Chat>>
+
+    @PUT("chat/quitter_groupe")
+    fun quitterGroupe(@Body map:HashMap<String,String>):Call<ServerResponse>
+    /******************** end consommation chat room*************************/
+
+
+    /********************** consommation message ****************************/
+    @GET("/message/{chat_id}")
+    fun getMsgParChat(@Path("chat_id") chat_id:String):Call<ArrayList<message>>
+
+    @POST("/message/send")
+    fun sendMessage(@Body body:HashMap<String,String>):Call<ServerResponse>
+
+
+    @POST("/message/msg_user")
+    fun getMessagesUser(@Body body:HashMap<String,String>):Call<ArrayList<ChatResponse>>
+    /********************** end consommation message ***********************/
 
 
     companion object Connection {

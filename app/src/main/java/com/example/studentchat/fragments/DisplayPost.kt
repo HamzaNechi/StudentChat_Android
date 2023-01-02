@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -38,6 +39,59 @@ class DisplayPost: Fragment(){
                 swipe.setRefreshing(false);
             }
         }
+
+        val query=view.findViewById<SearchView>(R.id.search_post)
+
+        query.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(queryT: String?): Boolean {
+                val retrofitBuilder=ApiPostInterface.retrofitBuilder
+                val map=HashMap<String,String>()
+                map.put("content",queryT.toString())
+                val retrofitData=retrofitBuilder.serchPost(map)
+                retrofitData.enqueue(object : Callback<ListPost> {
+                    override fun onResponse(call: Call<ListPost>, response: Response<ListPost>) {
+                        if (response.isSuccessful){
+                            val lp: ListPost = response.body()!!
+                            val listPosts:ArrayList<Post> = lp.posts.toCollection(kotlin.collections.ArrayList())
+                            posts.adapter= PostAdapter(listPosts,view.context)
+                            posts.scrollToPosition(0);
+                            posts.adapter?.notifyDataSetChanged()
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<ListPost>, t: Throwable) {
+                        Log.e("onFailure",t.toString())
+                    }
+                })
+                return true;
+            }
+
+            override fun onQueryTextChange(queryT: String?): Boolean {
+                val retrofitBuilder=ApiPostInterface.retrofitBuilder
+                val map=HashMap<String,String>()
+                map.put("content",queryT.toString())
+                val retrofitData=retrofitBuilder.serchPost(map)
+                retrofitData.enqueue(object : Callback<ListPost> {
+                    override fun onResponse(call: Call<ListPost>, response: Response<ListPost>) {
+                        if (response.isSuccessful){
+                            val lp: ListPost = response.body()!!
+                            val listPosts:ArrayList<Post> = lp.posts.toCollection(kotlin.collections.ArrayList())
+                            posts.adapter= PostAdapter(listPosts,view.context)
+                            posts.scrollToPosition(0);
+                            posts.adapter?.notifyDataSetChanged()
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<ListPost>, t: Throwable) {
+                        Log.e("onFailure",t.toString())
+                    }
+                })
+                return true
+            }
+
+        })
         return view
     }
 

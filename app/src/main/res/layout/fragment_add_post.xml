@@ -66,31 +66,31 @@
             <RelativeLayout
                 android:id="@+id/ll_addpost"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_addpost"
-                android:layout_margin="10dp"
-                android:layout_height="wrap_content">
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp">
 
                 <Button
-                    android:layout_alignParentLeft="true"
                     android:id="@+id/pick_gallery"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gallery"
+                    android:layout_alignParentLeft="true"
                     android:drawableLeft="@drawable/ic_baseline_image_24"
-                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
-
-
-
+                    android:text="Gallery" />
 
 
                 <Button
                     android:id="@+id/pick_camera"
-                    android:layout_alignParentRight="true"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Caméra"
+                    android:layout_alignParentRight="true"
                     android:drawableLeft="@drawable/ic_baseline_camera_alt_24"
-                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+                    android:text="Caméra" />
 
             </RelativeLayout>
 

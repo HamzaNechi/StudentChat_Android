@@ -1,22 +1,24 @@
 package com.example.studentchat.activities
 
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
-import androidx.viewpager.widget.ViewPager
+import android.widget.SearchView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.example.studentchat.fragments.DiscussionFragment
+import com.example.studentchat.R
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.studentchat.Interface.ApiPostInterface
 import com.example.studentchat.Interface.ServerResponse
-import com.example.studentchat.R
-import com.example.studentchat.adapters.ViewPagerAdapter
-import com.example.studentchat.fragments.Contacts
-import com.example.studentchat.fragments.Groupes
-import com.example.studentchat.fragments.Invitation
+import com.example.studentchat.fragments.InscriptionFragment
+import com.example.studentchat.fragments.LoginFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
@@ -24,19 +26,19 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Contact : AppCompatActivity() {
+class Messages : AppCompatActivity() {
+    lateinit var currentUser_id:String;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_contact)
+        setContentView(R.layout.activity_messages)
+
+        //get user connected
+        val sharedPref= this.getSharedPreferences("userConnected", Context.MODE_PRIVATE)
+        currentUser_id = sharedPref?.getString("_id","default value").toString()
+
 
         val toolbar=findViewById<Toolbar>(R.id.myToolbar);
         setSupportActionBar(toolbar)
-        //val container=findViewById<FragmentContainerView>(R.id.fragment_container_contact)
-        val container=findViewById<ViewPager>(R.id.pager_container)
-        val tabs=findViewById<TabLayout>(R.id.tabs_contacts)
-        setUpTabs(container,tabs)
-        //tabs.addOnTabSelectedListener(TabLayout.OnTabSelectedListener{})
-        //replaceFragment(Invitation(this));
 
         val addGroupeBtn=findViewById<FloatingActionButton>(R.id.floating_action_button);
 
@@ -44,10 +46,17 @@ class Contact : AppCompatActivity() {
             val i=Intent(this,AddGroup::class.java)
             startActivity(i);
         }
+        
+       replaceFragment(DiscussionFragment());
+
+
+
+
+        //onclick bottomnavigationbar
         val bnb=findViewById<BottomNavigationView>(R.id.menu_bottom);
         /******get menu and update selected*****/
-        val menu: Menu =bnb.menu
-        menu.findItem(R.id.contacts).setChecked(true);
+        val menu:Menu=bnb.menu
+        menu.findItem(R.id.chat).setChecked(true);
         bnb.setOnNavigationItemSelectedListener{ item ->
             when(item.itemId) {
                 R.id.home -> {
@@ -62,32 +71,26 @@ class Contact : AppCompatActivity() {
                     true
                 }
                 R.id.contacts->{
-                    item.setChecked(true)
+                    item.isChecked = true
                     val i= Intent(this,Contact::class.java)
                     startActivity(i)
                     true
                 }
                 else -> false
             }
-        }
+        }//end bottom navigation bar
     }
 
-    private fun setUpTabs(container: ViewPager, tabs: TabLayout) {
-        val adapter= ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(Contacts(this),"Amis")
-        adapter.addFragment(Groupes(this),"Groupes")
-        adapter.addFragment(Invitation(this),"Invitations")
-        container.adapter=adapter
-        tabs.setupWithViewPager(container)
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction=fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container,fragment)
+        fragmentTransaction.commit()
     }
-
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu,menu);
-        // menu?.getItem(R.id.signout)?.icon?.colorFilter = this.getColor(R.color.primary).
-        // val search: SearchView = menu?.findItem(R.id.signout)?.actionView as SearchView;
-        //search.queryHint="Chercher un article..."
         return true
     }
 
@@ -98,6 +101,7 @@ class Contact : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 
     private fun signout() {
         val sharedPref= this.getSharedPreferences("userConnected", Context.MODE_PRIVATE)

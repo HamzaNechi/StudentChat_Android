@@ -12,13 +12,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.studentchat.Interface.ApiPostInterface
-import com.example.studentchat.Interface.ListPost
-import com.example.studentchat.Interface.ServerResponse
+import com.example.studentchat.Interface.SocketHandler
 import com.example.studentchat.R
-import com.example.studentchat.activities.Chat
 import com.example.studentchat.activities.Home
-import com.example.studentchat.adapters.PostAdapter
-import com.example.studentchat.entity.Post
 import com.example.studentchat.entity.User
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,12 +29,18 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //socket
+        SocketHandler.setSocket()
+        SocketHandler.establishConnection()
+        val mSocket = SocketHandler.getSocket()
+
         val view:View=inflater.inflate(R.layout.fragment_login, container, false)
         email=view.findViewById(R.id.email)
         password=view.findViewById(R.id.password)
         val btnLogin=view.findViewById<Button>(R.id.btnLogin)
 
         btnLogin.setOnClickListener {
+            mSocket.emit("connection", email.text.toString())
             map=HashMap<String,String>()
             map.put("email",email.text.toString())
             map.put("password",password.text.toString())
@@ -60,10 +62,6 @@ class LoginFragment : Fragment() {
                         editor.commit()
                         val i=Intent(it.context,Home::class.java);
                         startActivity(i)
-                        Toast.makeText(it.context,
-                            sharedPreference!!.getString("username","kaaabboul"),Toast.LENGTH_LONG).show()
-                    }else{
-                        Toast.makeText(it.context,response.message(),Toast.LENGTH_LONG).show()
                     }
 
                 }

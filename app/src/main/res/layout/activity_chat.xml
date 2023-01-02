@@ -6,94 +6,134 @@
     android:layout_height="match_parent"
     tools:context=".activities.Chat">
 
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/myToolbar"
+        android:layout_height="wrap_content"
+        android:background="@color/primary">
+
+
+        <RelativeLayout
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            app:title="@string/discussions"
-            app:titleTextColor="@color/white" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/fragment_container"
-            android:layout_marginLeft="5dp"
-            android:backgroundTint="@color/primary"
-            app:tabSelectedTextColor="@color/white"
-            app:tabIndicatorColor="@color/white"
-            app:tabTextColor="@color/secondaryVariant"
-            >
-
-            <com.google.android.material.tabs.TabItem
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_alignParentLeft="true"
+                android:id="@+id/rell1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tous" />
+                >
 
-            <com.google.android.material.tabs.TabItem
+                <androidx.constraintlayout.utils.widget.ImageFilterView
+                    app:roundPercent = "1.0"
+                    android:id="@+id/img_user_chat"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_ahri"/>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_us"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@id/img_user_chat">
+
+                    <TextView
+                        android:id="@+id/name_user_chat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hamza nechi"
+                        android:textSize="17sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-medium"/>
+
+                    <TextView
+                        android:id="@+id/status_connect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="En ligne"
+                        android:textSize="13sp"
+                        android:visibility="gone"
+                        android:textColor="@color/green"
+                        android:fontFamily="sans-serif"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/close_chat"
+                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Privé" />
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:src="@drawable/ic_baseline_close_24"/>
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Groupe" />
-        </com.google.android.material.tabs.TabLayout>
+
+        </RelativeLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
 
+    <!--recycler view-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messenger"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbar"
+        android:layout_above="@+id/la_bottom"/>
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
+        android:id="@+id/la_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_menu"
-        app:menu="@menu/menu_bottom"
         android:layout_alignParentBottom="true"
-        android:id="@+id/menu_bottom"
-        tools:context=".activities.root"/>
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_send_msg"
+                android:layout_width="338dp"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"
+                android:hint="Message ...">
 
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="555dp"
-        android:layout_above="@+id/menu_bottom"
-        android:layout_below="@+id/appbar"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="0dp"
-        android:name="com.example.studentchat.fragments.DiscussionFragment"
-        tools:layout="@layout/fragment_discussion" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/send_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_action_button"
-        android:layout_width="wrap_content"
-        android:layout_height="56dp"
-        android:layout_above="@+id/menu_bottom"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="bottom|right"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:contentDescription="fab"
-        app:backgroundTint="@color/primary"
-        app:srcCompat="@drawable/ic_baseline_add_comment_24"
-        app:tint="@color/white" />
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <ImageButton
+                android:id="@+id/send_msg_btn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_splash"
+                android:src="@drawable/ic_baseline_send_24" />
+
+        </RelativeLayout>
 
 
 
+    </RelativeLayout>
 
 </RelativeLayout>
